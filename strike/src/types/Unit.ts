@@ -60,7 +60,7 @@ export class Unit {
     if (trueHealth <= this._totalHealth) {
       this._health = trueHealth
     } else {
-      this._health = trueHealth
+      this._health = this._totalHealth
     }
   }
 
