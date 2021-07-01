@@ -1,3 +1,4 @@
+import { getCoords } from '../helpers/helpers'
 import { IActionBehavior } from './Behaviors/ActionBehavior/ActionBehavior'
 
 export class Unit {
@@ -74,6 +75,10 @@ export class Unit {
 
   public performAction(targets: Unit[] | Unit): void {
     this.actionBehavior.performAction(targets)
+  }
+
+  public getHitMatrix(friends: Unit[][], foes: Unit[][]): boolean[][] {
+    return this.actionBehavior.getHitMatrix(friends, foes, getCoords(friends, this))
   }
 
   protected setActionBehavior(actionBehavior: IActionBehavior) {
