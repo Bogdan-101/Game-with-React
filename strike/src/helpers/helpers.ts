@@ -22,6 +22,7 @@ export function getCoords(units: Unit[][], target: Unit): number[] {
 }
 
 export function isFirstLineDead(units: Unit[][]): boolean {
+  // tslint:disable-next-line: no-shadowed-variable
   let isFirstLineDead = true
   units[0].forEach((unit: Unit) => {
     if (unit.health > 0) {

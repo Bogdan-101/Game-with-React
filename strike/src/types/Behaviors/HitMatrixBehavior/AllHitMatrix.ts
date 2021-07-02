@@ -1,17 +1,7 @@
 import { Unit } from '../../Unit'
-import { IActionBehavior } from './ActionBehavior'
+import { IHitMatrixBehavior } from './HitMatrixBehavior'
 
-export class HealerSingle implements IActionBehavior {
-  public healAmount: number
-
-  constructor(healAmount: number) {
-    this.healAmount = healAmount
-  }
-
-  public performAction(target: Unit): void {
-    target.heal(this.healAmount)
-  }
-
+export class AllHitMatrix implements IHitMatrixBehavior {
   public getHitMatrix(friends: Unit[][], foes: Unit[][], coords: number[]): boolean[][] {
     const result: boolean[][] = []
     foes.forEach((row: Unit[], index: number) => {

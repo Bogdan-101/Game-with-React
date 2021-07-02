@@ -1,5 +1,7 @@
 import { Unit } from '../Unit'
 import { Range } from '../Behaviors/ActionBehavior/Range'
+import { SingleTarget } from '../Behaviors/TargetBehavior/SingleTarget'
+import { AllHitMatrix } from '../Behaviors/HitMatrixBehavior/AllHitMatrix'
 
 export class Bandit extends Unit {
   public constructor() {
@@ -8,6 +10,13 @@ export class Bandit extends Unit {
       totalHealth: 75,
       initiative: 60,
     }
-    super(new Range(30), baseInfo)
+    super(
+      {
+        actionBehavior: new Range(30),
+        targetBehavior: new SingleTarget(),
+        hitMatrixBehavior: new AllHitMatrix(),
+      },
+      baseInfo
+    )
   }
 }

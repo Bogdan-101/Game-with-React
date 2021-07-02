@@ -1,5 +1,7 @@
 import { Unit } from '../Unit'
-import { HealerMultiple } from '../Behaviors/ActionBehavior/HealerMultiple'
+import { Healer } from '../Behaviors/ActionBehavior/Healer'
+import { MultipleTarget } from '../Behaviors/TargetBehavior/MultipleTargets'
+import { AllHitMatrix } from '../Behaviors/HitMatrixBehavior/AllHitMatrix'
 
 export class Bishop extends Unit {
   public constructor() {
@@ -8,6 +10,13 @@ export class Bishop extends Unit {
       totalHealth: 130,
       initiative: 20,
     }
-    super(new HealerMultiple(25), baseInfo)
+    super(
+      {
+        actionBehavior: new Healer(25),
+        targetBehavior: new MultipleTarget(),
+        hitMatrixBehavior: new AllHitMatrix(),
+      },
+      baseInfo
+    )
   }
 }

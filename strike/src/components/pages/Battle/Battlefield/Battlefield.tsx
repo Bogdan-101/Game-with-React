@@ -17,6 +17,7 @@ export const Battlefield: React.FC = () => {
       })
     })
     console.log(helpers.generateInitiativeQueue(team1, team2))
+    
   })
 
   return <div className="field" />

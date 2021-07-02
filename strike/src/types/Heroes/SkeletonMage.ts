@@ -1,5 +1,7 @@
 import { Unit } from '../Unit'
 import { Mage } from '../Behaviors/ActionBehavior/Mage'
+import { MultipleTarget } from '../Behaviors/TargetBehavior/MultipleTargets'
+import { AllHitMatrix } from '../Behaviors/HitMatrixBehavior/AllHitMatrix'
 
 export class SkeletonMage extends Unit {
   public constructor() {
@@ -8,6 +10,13 @@ export class SkeletonMage extends Unit {
       totalHealth: 50,
       initiative: 40,
     }
-    super(new Mage(20), baseInfo)
+    super(
+      {
+        actionBehavior: new Mage(25),
+        targetBehavior: new MultipleTarget(),
+        hitMatrixBehavior: new AllHitMatrix(),
+      },
+      baseInfo
+    )
   }
 }

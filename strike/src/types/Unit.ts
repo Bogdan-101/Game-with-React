@@ -1,50 +1,42 @@
 import { getCoords } from '../helpers/helpers'
 import { IActionBehavior } from './Behaviors/ActionBehavior/ActionBehavior'
+import { ITargetBehavior } from './Behaviors/TargetBehavior/TargetBehavior'
+import { IHitMatrixBehavior } from './Behaviors/HitMatrixBehavior/HitMatrixBehavior'
+import { IBehaviors } from './Behaviors.d'
 
 export class Unit {
-  protected actionBehavior: IActionBehavior
-
-  private _name: string
-  public get name(): string {
-    return this._name
-  }
-
-  private _health: number
-  public get health(): number {
-    return this._health
-  }
-
-  private _totalHealth: number
-  public get totalHealth(): number {
-    return this._totalHealth
-  }
-
-  private _baseInitiative: number
-  public get baseInitiative(): number {
-    return this._baseInitiative
-  }
-
-  public _initiative: number
-  public get initiative(): number {
-    return this._initiative
-  }
-
-  private _armor: number
-  public get armor(): number {
-    return this._armor
-  }
-
   constructor(
-    actionBehavior: IActionBehavior,
+    Behaviors: IBehaviors,
     { name, totalHealth, initiative }: { name: string; totalHealth: number; initiative: number }
   ) {
-    this.actionBehavior = actionBehavior
+    this.actionBehavior = Behaviors.actionBehavior
+    this.targetBehavior = Behaviors.targetBehavior
+    this.hitMatrixBehavior = Behaviors.hitMatrixBehavior
     this._health = totalHealth
     this._totalHealth = totalHealth
     this._name = name
     this._initiative = initiative
     this._baseInitiative = initiative
     this._armor = 0
+  }
+
+  public get name(): string {
+    return this._name
+  }
+  public get health(): number {
+    return this._health
+  }
+  public get totalHealth(): number {
+    return this._totalHealth
+  }
+  public get baseInitiative(): number {
+    return this._baseInitiative
+  }
+  public get initiative(): number {
+    return this._initiative
+  }
+  public get armor(): number {
+    return this._armor
   }
 
   public takeDamage(damage: number) {
@@ -73,20 +65,36 @@ export class Unit {
     this._initiative = 0
   }
 
-  public performAction(targets: Unit[] | Unit): void {
-    this.actionBehavior.performAction(targets)
+  public performAction(targets: Unit[][] | Unit): void {
+    this.targetBehavior.performActionToTargets(targets, this.actionBehavior)
   }
 
   public getHitMatrix(friends: Unit[][], foes: Unit[][]): boolean[][] {
-    return this.actionBehavior.getHitMatrix(friends, foes, getCoords(friends, this))
-  }
-
-  protected setActionBehavior(actionBehavior: IActionBehavior) {
-    this.actionBehavior = actionBehavior
+    return this.hitMatrixBehavior.getHitMatrix(friends, foes, getCoords(friends, this))
   }
 
   public round(): void {
     this._initiative = this.baseInitiative
     this._armor = 0
   }
+
+  protected setActionBehavior(actionBehavior: IActionBehavior) {
+    this.actionBehavior = actionBehavior
+  }
+
+  protected actionBehavior: IActionBehavior
+  protected targetBehavior: ITargetBehavior
+  protected hitMatrixBehavior: IHitMatrixBehavior
+
+  private _name: string
+
+  private _health: number
+
+  private _totalHealth: number
+
+  private _baseInitiative: number
+
+  private _initiative: number
+
+  private _armor: number
 }

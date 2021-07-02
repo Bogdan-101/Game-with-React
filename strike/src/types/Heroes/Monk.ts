@@ -1,5 +1,7 @@
 import { Unit } from '../Unit'
-import { HealerSingle } from '../Behaviors/ActionBehavior/HealerSingle'
+import { Healer } from '../Behaviors/ActionBehavior/Healer'
+import { SingleTarget } from '../Behaviors/TargetBehavior/SingleTarget'
+import { AllHitMatrix } from '../Behaviors/HitMatrixBehavior/AllHitMatrix'
 
 export class Monk extends Unit {
   public constructor() {
@@ -8,6 +10,13 @@ export class Monk extends Unit {
       totalHealth: 90,
       initiative: 20,
     }
-    super(new HealerSingle(40), baseInfo)
+    super(
+      {
+        actionBehavior: new Healer(25),
+        targetBehavior: new SingleTarget(),
+        hitMatrixBehavior: new AllHitMatrix(),
+      },
+      baseInfo
+    )
   }
 }

@@ -1,5 +1,7 @@
 import { Unit } from '../Unit'
 import { Melee } from '../Behaviors/ActionBehavior/Melee'
+import { SingleTarget } from '../Behaviors/TargetBehavior/SingleTarget'
+import { MeleeHitMatrix } from '../Behaviors/HitMatrixBehavior/MeleeHitMatrix'
 
 export class Centaur extends Unit {
   public constructor() {
@@ -8,6 +10,13 @@ export class Centaur extends Unit {
       totalHealth: 150,
       initiative: 60,
     }
-    super(new Melee(50), baseInfo)
+    super(
+      {
+        actionBehavior: new Melee(25),
+        targetBehavior: new SingleTarget(),
+        hitMatrixBehavior: new MeleeHitMatrix(),
+      },
+      baseInfo
+    )
   }
 }
