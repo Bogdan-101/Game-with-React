@@ -4,6 +4,7 @@ import * as helpers from '../../../helpers/helpers'
 
 export class MeleeHitMatrix implements IHitMatrixBehavior {
   public getHitMatrix(friends: Unit[][], foes: Unit[][], coords: number[]): boolean[][] {
+    console.log(friends, foes, coords)
     if (!helpers.isFirstLineDead(friends) && coords[0] === 1) {
       return Array(2).fill(Array(3).fill(false))
     }
@@ -12,9 +13,9 @@ export class MeleeHitMatrix implements IHitMatrixBehavior {
       return Array(2).fill(Array(3).fill(false))
     }
 
-    let rowInd = 0
+    let rowInd = 1
     if (helpers.isFirstLineDead(foes)) {
-      rowInd = 1
+      rowInd = 0
     }
 
     const result: boolean[][] = [
@@ -30,6 +31,6 @@ export class MeleeHitMatrix implements IHitMatrixBehavior {
       }
     }
 
-    return result
+    return result.reverse()
   }
 }

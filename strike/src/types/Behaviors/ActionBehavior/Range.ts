@@ -2,13 +2,15 @@ import { Unit } from '../../Unit'
 import { IActionBehavior } from './ActionBehavior'
 
 export class Range implements IActionBehavior {
-  public damage: number
+  public power: number
+  public classType: string
 
   constructor(damage: number) {
-    this.damage = damage
+    this.power = damage
+    this.classType = 'damager'
   }
 
   public performAction(target: Unit): void {
-    target.takeDamage(this.damage)
+    target.takeDamage(this.power)
   }
 }

@@ -2,13 +2,15 @@ import { Unit } from '../../Unit'
 import { IActionBehavior } from './ActionBehavior'
 
 export class Healer implements IActionBehavior {
-  public healAmount: number
+  public power: number
+  public classType: string
 
   constructor(healAmount: number) {
-    this.healAmount = healAmount
+    this.power = healAmount
+    this.classType = 'healer'
   }
 
   public performAction(target: Unit): void {
-    target.heal(this.healAmount)
+    target.heal(this.power)
   }
 }

@@ -2,6 +2,7 @@ import { Unit } from '../Unit'
 import { Mage } from '../Behaviors/ActionBehavior/Mage'
 import { MultipleTarget } from '../Behaviors/TargetBehavior/MultipleTargets'
 import { AllHitMatrix } from '../Behaviors/HitMatrixBehavior/AllHitMatrix'
+import { TargetTeamFoes } from '../Behaviors/TargetTeamBehavior/TargetTeamFoes'
 
 export class Archimage extends Unit {
   public constructor() {
@@ -15,6 +16,7 @@ export class Archimage extends Unit {
         actionBehavior: new Mage(30),
         targetBehavior: new MultipleTarget(),
         hitMatrixBehavior: new AllHitMatrix(),
+        TargetTeamBehavior: new TargetTeamFoes(),
       },
       baseInfo
     )

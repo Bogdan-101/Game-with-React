@@ -1,0 +1,19 @@
+.queue {
+  position: absolute;
+  bottom: 15px;
+  left: 15px;
+  width: 70%;
+}
+
+.queue__wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: row;
+  flex-wrap: wrap;
+  flex-flow: row wrap;
+  align-content: flex-end;
+  gap: 15px;
+}
+
+

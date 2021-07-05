@@ -3,3 +3,19 @@
 .app {
   overflow: hidden;
 }
+
+.team1 {
+  background: rgb(89, 189, 255);
+}
+
+.team2 {
+  background: rgb(255, 99, 99);
+}
+
+.hero {
+  background: rgb(255, 208, 0);
+}
+
+.hit {
+  border: 3px solid rgb(233, 233, 233);
+}

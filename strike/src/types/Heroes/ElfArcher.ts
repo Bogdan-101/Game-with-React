@@ -2,6 +2,7 @@ import { Unit } from '../Unit'
 import { Range } from '../Behaviors/ActionBehavior/Range'
 import { SingleTarget } from '../Behaviors/TargetBehavior/SingleTarget'
 import { AllHitMatrix } from '../Behaviors/HitMatrixBehavior/AllHitMatrix'
+import { TargetTeamFoes } from '../Behaviors/TargetTeamBehavior/TargetTeamFoes'
 
 export class ElfArcher extends Unit {
   public constructor() {
@@ -15,6 +16,7 @@ export class ElfArcher extends Unit {
         actionBehavior: new Range(45),
         targetBehavior: new SingleTarget(),
         hitMatrixBehavior: new AllHitMatrix(),
+        TargetTeamBehavior: new TargetTeamFoes(),
       },
       baseInfo
     )

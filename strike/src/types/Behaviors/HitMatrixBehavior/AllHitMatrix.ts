@@ -6,11 +6,11 @@ export class AllHitMatrix implements IHitMatrixBehavior {
     const result: boolean[][] = []
     foes.forEach((row: Unit[], index: number) => {
       result.push([])
-      row.forEach((foe: Unit, ind: number) => {
-        if (foe.health > 0) {
+      row.forEach((unit: Unit, ind: number) => {
+        if (unit.health > 0) {
           result[index].push(true)
         } else {
-          result[index].push(true)
+          result[index].push(false)
         }
       })
     })

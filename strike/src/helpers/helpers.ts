@@ -8,6 +8,9 @@ import { Monk } from '../types/Heroes/Monk'
 import { Sirena } from '../types/Heroes/Sirena'
 import { Skeleton } from '../types/Heroes/Skeleton'
 import { SkeletonMage } from '../types/Heroes/SkeletonMage'
+import { Healer } from '../types/Behaviors/ActionBehavior/Healer'
+
+export type QueueType = Unit & { team?: number }
 
 export function getCoords(units: Unit[][], target: Unit): number[] {
   let coords: number[] = []
@@ -77,21 +80,25 @@ function getHeroByIndex(ind: number): Unit {
   }
 }
 
-export function generateInitiativeQueue(team1: Unit[][], team2: Unit[][]) {
-  const result: Unit[] = []
+export function generateInitiativeQueue(team1: Unit[][], team2: Unit[][]): QueueType[] {
+  const result: QueueType[] = []
 
   for (let i = 0; i < 2; i++) {
     for (let j = 0; j < 3; j++) {
-      result.push(team1[i][j])
-      result.push(team2[i][j])
+      const firstTeam: QueueType = team1[i][j]
+      firstTeam.team = 1
+      const secondTeam: QueueType = team2[i][j]
+      secondTeam.team = 2
+      result.push(firstTeam)
+      result.push(secondTeam)
     }
   }
 
-  result.sort((a: Unit, b: Unit) => {
+  result.sort((a: QueueType, b: QueueType) => {
     if (a.initiative > b.initiative) {
-      return 1
-    } else if (a.initiative < b.initiative) {
       return -1
+    } else if (a.initiative < b.initiative) {
+      return 1
     } else {
       const randNum = Math.random()
       if (randNum > 0.5) return 1

@@ -2,6 +2,7 @@ import { Unit } from '../Unit'
 import { Healer } from '../Behaviors/ActionBehavior/Healer'
 import { MultipleTarget } from '../Behaviors/TargetBehavior/MultipleTargets'
 import { AllHitMatrix } from '../Behaviors/HitMatrixBehavior/AllHitMatrix'
+import { TargetTeamAllies } from '../Behaviors/TargetTeamBehavior/TargetTeamAllies'
 
 export class Bishop extends Unit {
   public constructor() {
@@ -15,6 +16,7 @@ export class Bishop extends Unit {
         actionBehavior: new Healer(25),
         targetBehavior: new MultipleTarget(),
         hitMatrixBehavior: new AllHitMatrix(),
+        TargetTeamBehavior: new TargetTeamAllies(),
       },
       baseInfo
     )

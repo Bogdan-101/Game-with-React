@@ -1,7 +1,8 @@
 import { Unit } from '../Unit'
 import { Paralyze } from '../Behaviors/ActionBehavior/Paralyze'
-import { MultipleTarget } from '../Behaviors/TargetBehavior/MultipleTargets'
+import { SingleTarget } from '../Behaviors/TargetBehavior/SingleTarget'
 import { AllHitMatrix } from '../Behaviors/HitMatrixBehavior/AllHitMatrix'
+import { TargetTeamFoes } from '../Behaviors/TargetTeamBehavior/TargetTeamFoes'
 
 export class Sirena extends Unit {
   public constructor() {
@@ -13,8 +14,9 @@ export class Sirena extends Unit {
     super(
       {
         actionBehavior: new Paralyze(),
-        targetBehavior: new MultipleTarget(),
+        targetBehavior: new SingleTarget(),
         hitMatrixBehavior: new AllHitMatrix(),
+        TargetTeamBehavior: new TargetTeamFoes(),
       },
       baseInfo
     )

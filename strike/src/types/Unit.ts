@@ -3,8 +3,10 @@ import { IActionBehavior } from './Behaviors/ActionBehavior/ActionBehavior'
 import { ITargetBehavior } from './Behaviors/TargetBehavior/TargetBehavior'
 import { IHitMatrixBehavior } from './Behaviors/HitMatrixBehavior/HitMatrixBehavior'
 import { IBehaviors } from './Behaviors.d'
+import { IUnit } from './Unit.d'
+import { ITargetTeamBehavior } from './Behaviors/TargetTeamBehavior/TargetTeamBehavior'
 
-export class Unit {
+export class Unit implements IUnit {
   constructor(
     Behaviors: IBehaviors,
     { name, totalHealth, initiative }: { name: string; totalHealth: number; initiative: number }
@@ -12,12 +14,14 @@ export class Unit {
     this.actionBehavior = Behaviors.actionBehavior
     this.targetBehavior = Behaviors.targetBehavior
     this.hitMatrixBehavior = Behaviors.hitMatrixBehavior
+    this.targetTeamBehavior = Behaviors.TargetTeamBehavior
     this._health = totalHealth
     this._totalHealth = totalHealth
     this._name = name
     this._initiative = initiative
     this._baseInitiative = initiative
     this._armor = 0
+    this._isStunned = false
   }
 
   public get name(): string {
@@ -38,8 +42,11 @@ export class Unit {
   public get armor(): number {
     return this._armor
   }
+  public get isStunned(): boolean {
+    return this._isStunned
+  }
 
-  public takeDamage(damage: number) {
+  public takeDamage(damage: number): void {
     const trueDamage = damage * (1 - this.armor)
     if (this._health - trueDamage > 0) {
       this._health -= trueDamage
@@ -48,7 +55,7 @@ export class Unit {
     }
   }
 
-  public heal(amount: number) {
+  public heal(amount: number): void {
     const trueHealth = this._health + amount
     if (trueHealth <= this._totalHealth) {
       this._health = trueHealth
@@ -62,15 +69,26 @@ export class Unit {
   }
 
   public paralyze(): void {
-    this._initiative = 0
+    this._isStunned = true
   }
 
-  public performAction(targets: Unit[][] | Unit): void {
-    this.targetBehavior.performActionToTargets(targets, this.actionBehavior)
+  public performAction(team: Unit[][], target: Unit): void {
+    this.targetBehavior.performActionToTargets(team, this.actionBehavior, target)
   }
 
-  public getHitMatrix(friends: Unit[][], foes: Unit[][]): boolean[][] {
-    return this.hitMatrixBehavior.getHitMatrix(friends, foes, getCoords(friends, this))
+  public getHitMatrix(
+    friends: Unit[][],
+    foes: Unit[][]
+  ): { hitMatrix: boolean[][]; isReverse: boolean } {
+    const teams = this.targetTeamBehavior.chooseTargetTeam(friends, foes)
+    let coords = getCoords(teams.friends, this)
+    if (coords.length === 0) {
+      coords = getCoords(teams.foes, this)
+    }
+    return {
+      hitMatrix: this.hitMatrixBehavior.getHitMatrix(teams.friends, teams.foes, coords),
+      isReverse: teams.isReverse,
+    }
   }
 
   public round(): void {
@@ -82,9 +100,10 @@ export class Unit {
     this.actionBehavior = actionBehavior
   }
 
-  protected actionBehavior: IActionBehavior
-  protected targetBehavior: ITargetBehavior
-  protected hitMatrixBehavior: IHitMatrixBehavior
+  public actionBehavior: IActionBehavior
+  public targetBehavior: ITargetBehavior
+  public hitMatrixBehavior: IHitMatrixBehavior
+  public targetTeamBehavior: ITargetTeamBehavior
 
   private _name: string
 
@@ -97,4 +116,6 @@ export class Unit {
   private _initiative: number
 
   private _armor: number
+
+  private _isStunned: boolean
 }

@@ -3,7 +3,8 @@ import { IActionBehavior } from '../ActionBehavior/ActionBehavior'
 
 export interface ITargetBehavior {
   performActionToTargets(
-    targets: Unit | Unit[][],
-    action: Pick<IActionBehavior, 'performAction'>
+    team: Unit[][],
+    action: Pick<IActionBehavior, 'performAction'>,
+    target: Unit
   ): void
 }

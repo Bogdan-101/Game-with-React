@@ -1,7 +1,7 @@
 import { Unit } from './../../Unit'
 
 export interface IActionBehavior {
-  damage?: number
-  healAmount?: number
+  power?: number
+  classType: string
   performAction(targets: Unit | Unit[][]): void
 }
