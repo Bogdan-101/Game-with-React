@@ -4,7 +4,6 @@ import * as helpers from '../../../helpers/helpers'
 
 export class MeleeHitMatrix implements IHitMatrixBehavior {
   public getHitMatrix(friends: Unit[][], foes: Unit[][], coords: number[]): boolean[][] {
-    console.log(friends, foes, coords)
     if (!helpers.isFirstLineDead(friends) && coords[0] === 1) {
       return Array(2).fill(Array(3).fill(false))
     }

@@ -13,12 +13,20 @@ type Props = {
     setMatrix: React.Dispatch<React.SetStateAction<Unit | {}>>
     removeMatrix(): void
   }
+  focusedHero: Unit
   hero: Unit
   team1: Unit[][]
   team2: Unit[][]
 }
 
-export const Queue: FC<Props> = ({ queue, focusTools, hero, team1, team2 }): ReactElement => {
+export const Queue: FC<Props> = ({
+  queue,
+  focusTools,
+  focusedHero,
+  hero,
+  team1,
+  team2,
+}): ReactElement => {
   return (
     <div className="queue">
       <div className="queue__wrapper">
@@ -29,7 +37,6 @@ export const Queue: FC<Props> = ({ queue, focusTools, hero, team1, team2 }): Rea
               key={uuidv4()}
               // tslint:disable-next-line: jsx-no-lambda
               onMouseEnter={() => {
-                console.log('entering')
                 focusTools.setFocus(unit)
                 const unitHitMatrix = unit.getHitMatrix(team1, team2)
                 focusTools.setMatrix({
@@ -40,12 +47,15 @@ export const Queue: FC<Props> = ({ queue, focusTools, hero, team1, team2 }): Rea
               }}
               // tslint:disable-next-line: jsx-no-lambda
               onMouseLeave={() => {
-                console.log('leaving')
                 focusTools.removeFocus()
                 focusTools.removeMatrix()
               }}
             >
-              <UnitCell unit={unit} isHero={hero === unit} />
+              <UnitCell
+                unit={unit}
+                isHero={hero === unit}
+                focusedClass={focusedHero === unit ? 'hero__focused' : ''}
+              />
             </div>
           ))}
       </div>

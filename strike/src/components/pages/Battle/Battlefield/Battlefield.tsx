@@ -1,8 +1,7 @@
-import React, { useEffect, useState, FC, ReactElement } from 'react'
+import React, { FC, ReactElement } from 'react'
 import { Unit } from '../../../../types/Unit'
 import { UnitCell } from '../../../common/UnitCell'
 import { v4 as uuidv4 } from 'uuid'
-import { isEqual } from 'lodash'
 import './Battlefield.css'
 
 type Props = {
@@ -12,20 +11,24 @@ type Props = {
     setFocus: React.Dispatch<React.SetStateAction<Unit | {}>>
     removeFocus: () => {}
   }
-  hero: Unit
+  focusedHero: Unit
   hitMatrix: {
     hitMatrix: boolean[][]
     team: number
     isReverse: boolean
   }
+  hero: Unit
+  nextStep: () => void
 }
 
 export const Battlefield: FC<Props> = ({
   team1,
   team2,
   focusTools,
-  hero,
+  focusedHero,
   hitMatrix,
+  hero,
+  nextStep,
 }): ReactElement => {
   function getRows(team: Unit[][], teamNumber: number): ReactElement {
     return (
@@ -61,16 +64,37 @@ export const Battlefield: FC<Props> = ({
                     if (hitClass === '') {
                       return
                     }
-                    console.log('hit')
-                    if (hitMatrix.team === 1) {
-                      hero.performAction(team2, unit)
-                    } else {
-                      hero.performAction(team1, unit)
+                    // console.log('hit\nhero: ', hero, '\nunit: ', unit)
+                    let teams: {
+                      friends: Unit[][]
+                      foes: Unit[][]
+                      isReverse: boolean
                     }
-                    console.log(team1, team2)
+                    if (teamNumber === 2) {
+                      teams = hero.targetTeamBehavior.chooseTargetTeam(team1, team2)
+                    } else {
+                      teams = hero.targetTeamBehavior.chooseTargetTeam(team2, team1)
+                    }
+                    if (teams.isReverse) {
+                      teams.foes = teams.friends
+                    }
+                    console.log('-'.repeat(15))
+                    console.log('teamNumber: ', teamNumber)
+                    console.log('team1: ', team1)
+                    console.log('team2: ', team2)
+                    console.log('teams: ', teams)
+                    console.log('unit: ', unit)
+                    console.log('hero: ', hero)
+                    console.log('-'.repeat(15))
+                    hero.performAction(teams.foes, unit)
+                    nextStep()
                   }}
                 >
-                  <UnitCell unit={unit} isHero={hero === unit} />
+                  <UnitCell
+                    unit={unit}
+                    isHero={hero === unit}
+                    focusedClass={focusedHero === unit ? 'hero__focused' : ''}
+                  />
                 </div>
               )
             })}
@@ -80,12 +104,22 @@ export const Battlefield: FC<Props> = ({
     )
   }
 
-  if (typeof hero === 'undefined') return <div />
+  if (typeof focusedHero === 'undefined') return <div />
 
   return (
     <div className="field">
       <div className="field__team team1">{getRows(team1, 1)}</div>
       <div className="field__team team2">{getRows(team2, 2)}</div>
+      <button
+        className="field__defend"
+        // tslint:disable-next-line: jsx-no-lambda
+        onClick={() => {
+          hero.defend()
+          nextStep()
+        }}
+      >
+        Defend!
+      </button>
     </div>
   )
 }

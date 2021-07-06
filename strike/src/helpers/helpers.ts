@@ -8,7 +8,7 @@ import { Monk } from '../types/Heroes/Monk'
 import { Sirena } from '../types/Heroes/Sirena'
 import { Skeleton } from '../types/Heroes/Skeleton'
 import { SkeletonMage } from '../types/Heroes/SkeletonMage'
-import { Healer } from '../types/Behaviors/ActionBehavior/Healer'
+import { useState } from 'react'
 
 export type QueueType = Unit & { team?: number }
 
@@ -107,4 +107,8 @@ export function generateInitiativeQueue(team1: Unit[][], team2: Unit[][]): Queue
   })
 
   return result
+}
+
+export function getValidQueue(units: QueueType[]) {
+  return units.filter((unit: QueueType) => unit.health > 0)
 }

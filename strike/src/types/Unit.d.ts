@@ -15,7 +15,9 @@ export type IUnit = {
   takeDamage(damage: number): void
   heal(amount: number): void
   defend(): void
+  removeArmor(): void
   paralyze(): void
+  removeParalyze(): void
   performAction(team: Unit[][], target: Unit): void
   getHitMatrix(friends: Unit[][], foes: Unit[][]): { hitMatrix: boolean[][], isReverse: boolean }
   round(): void

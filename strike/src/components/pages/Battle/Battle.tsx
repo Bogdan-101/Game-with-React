@@ -25,17 +25,31 @@ export const Battle: React.FC = () => {
 
   useEffect(() => {
     resetMatrix()
+    queue[step].removeArmor()
+    if (queue[step].isStunned) {
+      queue[step].removeParalyze()
+      nextStep()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [step, round, queue])
 
   useEffect(() => {
-    console.log(hitMatrix, 'matrix')
-  }, [hitMatrix])
-
-  useEffect(() => {
     const queueArray = helpers.generateInitiativeQueue(team1.current, team2.current)
-    setQueue(queueArray)
+    setQueue(helpers.getValidQueue(queueArray))
     setFocusUnit(queueArray[step])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [round])
+
+  function nextStep() {
+    setQueue(helpers.getValidQueue(queue))
+    resetMatrix()
+    if (step + 1 >= queue.length) {
+      setRound((round) => round + 1)
+      setStep(0)
+    } else {
+      setStep((step) => step + 1)
+    }
+  }
 
   function resetMatrix() {
     if (typeof queue[step].team === 'undefined') {
@@ -61,12 +75,15 @@ export const Battle: React.FC = () => {
           team1={team1.current}
           team2={team2.current}
           focusTools={{ setFocus: setFocusUnit, removeFocus: removeFocusUnit }}
-          hero={focusUnit}
+          focusedHero={focusUnit}
           hitMatrix={hitMatrix}
+          hero={queue[step]}
+          nextStep={nextStep}
         />
         <Queue
           queue={queue}
-          hero={focusUnit}
+          focusedHero={focusUnit}
+          hero={queue[step]}
           team1={team1.current}
           team2={team2.current}
           focusTools={{

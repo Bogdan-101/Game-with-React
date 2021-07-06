@@ -68,8 +68,16 @@ export class Unit implements IUnit {
     this._armor = 0.5
   }
 
+  public removeArmor(): void {
+    this._armor = 0
+  }
+
   public paralyze(): void {
     this._isStunned = true
+  }
+
+  public removeParalyze(): void {
+    this._isStunned = false
   }
 
   public performAction(team: Unit[][], target: Unit): void {
