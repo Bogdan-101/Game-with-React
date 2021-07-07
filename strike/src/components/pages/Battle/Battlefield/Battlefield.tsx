@@ -30,23 +30,31 @@ export const Battlefield: FC<Props> = ({
   hero,
   nextStep,
 }): ReactElement => {
+  // console.log(hitMatrix, 'matrix')
   function getRows(team: Unit[][], teamNumber: number): ReactElement {
     return (
       <div className={`field__team field__team${teamNumber}`}>
         {team.map((row: Unit[], rowInd: number) => (
           <div className="field__teamRow" key={uuidv4()}>
             {row.map((unit: Unit, colInd: number) => {
-              let hitClass =
-                hitMatrix.hitMatrix[rowInd][colInd] === true && hitMatrix.team !== teamNumber
-                  ? 'hit'
-                  : ''
+              let hitTeam
+              if (hitMatrix.team === 1)
+                hitTeam = hero.targetTeamBehavior.chooseTargetTeam(team1, team2)
+              else
+                hitTeam = hero.targetTeamBehavior.chooseTargetTeam(team2, team1)
+              let isNeededTeam = hitMatrix.team !== teamNumber
               if (hitMatrix.isReverse) {
-                if (hitClass === 'hit') {
-                  hitClass = ''
-                } else {
-                  hitClass = 'hit'
-                }
+                isNeededTeam = !isNeededTeam
               }
+              let hitClass = hitMatrix.hitMatrix[rowInd][colInd] && isNeededTeam ? 'hit' : ''
+              // if (hitMatrix.isReverse) {
+              //   if (hitClass === 'hit') {
+              //     hitClass = ''
+              //   } else {
+              //     hitClass = 'hit'
+              //   }
+              // }
+              // console.log('hit team: ', hitMatrix, 'hero: ', hero, 'teamNumber: ', teamNumber, 'isNeededTeam: ', isNeededTeam, 'value: ', hitMatrix.hitMatrix[rowInd][colInd], 'hitClass: ', hitClass)
               return (
                 <div
                   className={`field__hoveredDiv ${hitClass}`}
@@ -78,14 +86,14 @@ export const Battlefield: FC<Props> = ({
                     if (teams.isReverse) {
                       teams.foes = teams.friends
                     }
-                    console.log('-'.repeat(15))
-                    console.log('teamNumber: ', teamNumber)
-                    console.log('team1: ', team1)
-                    console.log('team2: ', team2)
-                    console.log('teams: ', teams)
-                    console.log('unit: ', unit)
-                    console.log('hero: ', hero)
-                    console.log('-'.repeat(15))
+                    // console.log('-'.repeat(15))
+                    // console.log('teamNumber: ', teamNumber)
+                    // console.log('team1: ', team1)
+                    // console.log('team2: ', team2)
+                    // console.log('teams: ', teams)
+                    // console.log('unit: ', unit)
+                    // console.log('hero: ', hero)
+                    // console.log('-'.repeat(15))
                     hero.performAction(teams.foes, unit)
                     nextStep()
                   }}

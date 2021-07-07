@@ -56,6 +56,9 @@ export class Unit implements IUnit {
   }
 
   public heal(amount: number): void {
+    if (this._health === 0) {
+      return
+    }
     const trueHealth = this._health + amount
     if (trueHealth <= this._totalHealth) {
       this._health = trueHealth
@@ -89,6 +92,7 @@ export class Unit implements IUnit {
     foes: Unit[][]
   ): { hitMatrix: boolean[][]; isReverse: boolean } {
     const teams = this.targetTeamBehavior.chooseTargetTeam(friends, foes)
+    console.log('teams: ', teams, 'hero: ', this.name)
     let coords = getCoords(teams.friends, this)
     if (coords.length === 0) {
       coords = getCoords(teams.foes, this)

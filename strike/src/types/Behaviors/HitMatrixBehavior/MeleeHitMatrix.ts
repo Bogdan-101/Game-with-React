@@ -16,6 +16,10 @@ export class MeleeHitMatrix implements IHitMatrixBehavior {
     if (helpers.isFirstLineDead(foes)) {
       rowInd = 0
     }
+    let rowIndForSearch = 0
+    if (helpers.isFirstLineDead(foes)) {
+      rowIndForSearch = 1
+    }
 
     const result: boolean[][] = [
       [false, false, false],
@@ -23,8 +27,8 @@ export class MeleeHitMatrix implements IHitMatrixBehavior {
     ]
     for (let i = -1; i < 2; i++) {
       if (
-        typeof foes[rowInd][coords[1] + i] !== 'undefined' &&
-        foes[rowInd][coords[1] + i].health > 0
+        typeof foes[rowIndForSearch][coords[1] + i] !== 'undefined' &&
+        foes[rowIndForSearch][coords[1] + i].health > 0
       ) {
         result[rowInd][coords[1] + i] = true
       }

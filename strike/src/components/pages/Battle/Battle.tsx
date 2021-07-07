@@ -55,7 +55,12 @@ export const Battle: React.FC = () => {
     if (typeof queue[step].team === 'undefined') {
       return
     }
-    const unitHitMatrix = queue[step]!.getHitMatrix(team1.current, team2.current)
+    let unitHitMatrix;
+    if (queue[step].team === 1) {
+      unitHitMatrix = queue[step]!.getHitMatrix(team1.current, team2.current)
+    } else {
+      unitHitMatrix = queue[step]!.getHitMatrix(team2.current, team1.current)
+    }
     setHitMatrix({
       hitMatrix: unitHitMatrix.hitMatrix,
       isReverse: unitHitMatrix.isReverse,

@@ -38,7 +38,12 @@ export const Queue: FC<Props> = ({
               // tslint:disable-next-line: jsx-no-lambda
               onMouseEnter={() => {
                 focusTools.setFocus(unit)
-                const unitHitMatrix = unit.getHitMatrix(team1, team2)
+                let unitHitMatrix;
+                if (unit.team === 1) {
+                  unitHitMatrix = unit.getHitMatrix(team1, team2)
+                } else {
+                  unitHitMatrix = unit.getHitMatrix(team2, team1)
+                }
                 focusTools.setMatrix({
                   hitMatrix: unitHitMatrix.hitMatrix,
                   team: unit.team,

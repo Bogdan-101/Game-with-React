@@ -8,7 +8,6 @@ import { Monk } from '../types/Heroes/Monk'
 import { Sirena } from '../types/Heroes/Sirena'
 import { Skeleton } from '../types/Heroes/Skeleton'
 import { SkeletonMage } from '../types/Heroes/SkeletonMage'
-import { useState } from 'react'
 
 export type QueueType = Unit & { team?: number }
 
