@@ -3,23 +3,7 @@ import { Unit } from '../../../../types/Unit'
 import { UnitCell } from '../../../common/UnitCell'
 import { v4 as uuidv4 } from 'uuid'
 import './Battlefield.css'
-
-type Props = {
-  team1: Unit[][]
-  team2: Unit[][]
-  focusTools: {
-    setFocus: React.Dispatch<React.SetStateAction<Unit | {}>>
-    removeFocus: () => {}
-  }
-  focusedHero: Unit
-  hitMatrix: {
-    hitMatrix: boolean[][]
-    team: number
-    isReverse: boolean
-  }
-  hero: Unit
-  nextStep: () => void
-}
+import { Props } from './Battlefield.d'
 
 export const Battlefield: FC<Props> = ({
   team1,
@@ -30,31 +14,17 @@ export const Battlefield: FC<Props> = ({
   hero,
   nextStep,
 }): ReactElement => {
-  // console.log(hitMatrix, 'matrix')
   function getRows(team: Unit[][], teamNumber: number): ReactElement {
     return (
       <div className={`field__team field__team${teamNumber}`}>
         {team.map((row: Unit[], rowInd: number) => (
           <div className="field__teamRow" key={uuidv4()}>
             {row.map((unit: Unit, colInd: number) => {
-              let hitTeam
-              if (hitMatrix.team === 1)
-                hitTeam = hero.targetTeamBehavior.chooseTargetTeam(team1, team2)
-              else
-                hitTeam = hero.targetTeamBehavior.chooseTargetTeam(team2, team1)
               let isNeededTeam = hitMatrix.team !== teamNumber
               if (hitMatrix.isReverse) {
                 isNeededTeam = !isNeededTeam
               }
-              let hitClass = hitMatrix.hitMatrix[rowInd][colInd] && isNeededTeam ? 'hit' : ''
-              // if (hitMatrix.isReverse) {
-              //   if (hitClass === 'hit') {
-              //     hitClass = ''
-              //   } else {
-              //     hitClass = 'hit'
-              //   }
-              // }
-              // console.log('hit team: ', hitMatrix, 'hero: ', hero, 'teamNumber: ', teamNumber, 'isNeededTeam: ', isNeededTeam, 'value: ', hitMatrix.hitMatrix[rowInd][colInd], 'hitClass: ', hitClass)
+              const hitClass = hitMatrix.hitMatrix[rowInd][colInd] && isNeededTeam ? 'hit' : ''
               return (
                 <div
                   className={`field__hoveredDiv ${hitClass}`}
@@ -72,7 +42,6 @@ export const Battlefield: FC<Props> = ({
                     if (hitClass === '') {
                       return
                     }
-                    // console.log('hit\nhero: ', hero, '\nunit: ', unit)
                     let teams: {
                       friends: Unit[][]
                       foes: Unit[][]
@@ -86,14 +55,6 @@ export const Battlefield: FC<Props> = ({
                     if (teams.isReverse) {
                       teams.foes = teams.friends
                     }
-                    // console.log('-'.repeat(15))
-                    // console.log('teamNumber: ', teamNumber)
-                    // console.log('team1: ', team1)
-                    // console.log('team2: ', team2)
-                    // console.log('teams: ', teams)
-                    // console.log('unit: ', unit)
-                    // console.log('hero: ', hero)
-                    // console.log('-'.repeat(15))
                     hero.performAction(teams.foes, unit)
                     nextStep()
                   }}

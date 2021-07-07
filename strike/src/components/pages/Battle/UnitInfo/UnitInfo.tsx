@@ -1,10 +1,6 @@
 import React, { FC, ReactElement } from 'react'
-import { IUnit } from '../../../../types/Unit.d'
 import './UnitInfo.css'
-
-type Props = {
-  unit: IUnit
-}
+import { Props } from './UnitInfo.d'
 
 export const UnitInfo: FC<Props> = ({ unit }): ReactElement => {
   if (typeof unit === 'undefined') {

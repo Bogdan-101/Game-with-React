@@ -1,12 +1,6 @@
 import React, { FC, ReactElement } from 'react'
-import { QueueType } from '../../../helpers/helpers'
 import './UnitCell.css'
-
-type Props = {
-  unit: QueueType
-  isHero: boolean
-  focusedClass: string
-}
+import { Props } from './UnitCell.d'
 
 export const UnitCell: FC<Props> = ({ unit, isHero, focusedClass }): ReactElement => {
   const teamClass = typeof unit.team !== 'undefined' ? (unit.team === 1 ? 'team1' : 'team2') : ''

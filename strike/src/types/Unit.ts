@@ -3,10 +3,10 @@ import { IActionBehavior } from './Behaviors/ActionBehavior/ActionBehavior'
 import { ITargetBehavior } from './Behaviors/TargetBehavior/TargetBehavior'
 import { IHitMatrixBehavior } from './Behaviors/HitMatrixBehavior/HitMatrixBehavior'
 import { IBehaviors } from './Behaviors.d'
-import { IUnit } from './Unit.d'
+import * as unitTypes from './Unit.d'
 import { ITargetTeamBehavior } from './Behaviors/TargetTeamBehavior/TargetTeamBehavior'
 
-export class Unit implements IUnit {
+export class Unit implements unitTypes.IUnit {
   constructor(
     Behaviors: IBehaviors,
     { name, totalHealth, initiative }: { name: string; totalHealth: number; initiative: number }
@@ -87,12 +87,8 @@ export class Unit implements IUnit {
     this.targetBehavior.performActionToTargets(team, this.actionBehavior, target)
   }
 
-  public getHitMatrix(
-    friends: Unit[][],
-    foes: Unit[][]
-  ): { hitMatrix: boolean[][]; isReverse: boolean } {
+  public getHitMatrix(friends: Unit[][], foes: Unit[][]): unitTypes.unitHitMatrixType {
     const teams = this.targetTeamBehavior.chooseTargetTeam(friends, foes)
-    console.log('teams: ', teams, 'hero: ', this.name)
     let coords = getCoords(teams.friends, this)
     if (coords.length === 0) {
       coords = getCoords(teams.foes, this)
@@ -108,7 +104,7 @@ export class Unit implements IUnit {
     this._armor = 0
   }
 
-  protected setActionBehavior(actionBehavior: IActionBehavior) {
+  protected setActionBehavior(actionBehavior: IActionBehavior): void {
     this.actionBehavior = actionBehavior
   }
 

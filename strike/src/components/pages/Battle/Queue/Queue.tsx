@@ -1,23 +1,9 @@
-import React, { FC, ReactElement } from 'react'
-import { Unit } from '../../../../types/Unit'
+import { FC, ReactElement } from 'react'
 import { UnitCell } from '../../../common/UnitCell/UnitCell'
 import { v4 as uuidv4 } from 'uuid'
 import './Queue.css'
 import { QueueType } from '../../../../helpers/helpers'
-
-type Props = {
-  queue: QueueType[]
-  focusTools: {
-    setFocus: React.Dispatch<React.SetStateAction<Unit | {}>>
-    removeFocus: () => {}
-    setMatrix: React.Dispatch<React.SetStateAction<Unit | {}>>
-    removeMatrix(): void
-  }
-  focusedHero: Unit
-  hero: Unit
-  team1: Unit[][]
-  team2: Unit[][]
-}
+import { Props } from './Queue.d'
 
 export const Queue: FC<Props> = ({
   queue,
@@ -38,7 +24,7 @@ export const Queue: FC<Props> = ({
               // tslint:disable-next-line: jsx-no-lambda
               onMouseEnter={() => {
                 focusTools.setFocus(unit)
-                let unitHitMatrix;
+                let unitHitMatrix
                 if (unit.team === 1) {
                   unitHitMatrix = unit.getHitMatrix(team1, team2)
                 } else {

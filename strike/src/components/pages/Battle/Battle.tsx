@@ -1,30 +1,33 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useCallback } from 'react'
 import { Battlefield } from './Battlefield'
 import { Queue } from './Queue'
 import { UnitInfo } from './UnitInfo'
 import * as helpers from '../../../helpers/helpers'
 import './Battle.css'
-import { Unit } from '../../../types/Unit'
+import * as types from './Battle.d'
+import * as unitTypes from '../../../types/Unit.d'
 
 export const Battle: React.FC = () => {
   const team1 = useRef(helpers.generateUnitsMatrix())
   const team2 = useRef(helpers.generateUnitsMatrix())
-  const [focusUnit, setFocusUnit] = useState<Unit | undefined>()
-  const [hitMatrix, setHitMatrix] = useState<{
-    hitMatrix: boolean[][]
-    team: number
-    isReverse: boolean
-  }>({
+  const [focusUnit, setFocusUnit] = useState<types.focusUnitType>()
+  const [hitMatrix, setHitMatrix] = useState<types.hitMatrixType>({
     hitMatrix: [[]],
     team: 0,
     isReverse: false,
   })
-  const [queue, setQueue] = useState(helpers.generateInitiativeQueue(team1.current, team2.current))
-  const [round, setRound] = useState(1)
-  const [step, setStep] = useState(0)
+  const [queue, setQueue] = useState<helpers.QueueType[]>(
+    helpers.generateInitiativeQueue(team1.current, team2.current)
+  )
+  const [round, setRound] = useState<number>(1)
+  const [step, setStep] = useState<number>(0)
+  const isWin = useRef(false)
 
   useEffect(() => {
     resetMatrix()
+    if (typeof queue[step] === 'undefined') {
+      return
+    }
     queue[step].removeArmor()
     if (queue[step].isStunned) {
       queue[step].removeParalyze()
@@ -34,28 +37,67 @@ export const Battle: React.FC = () => {
   }, [step, round, queue])
 
   useEffect(() => {
-    const queueArray = helpers.generateInitiativeQueue(team1.current, team2.current)
+    const queueArray: helpers.QueueType[] = helpers.generateInitiativeQueue(
+      team1.current,
+      team2.current
+    )
     setQueue(helpers.getValidQueue(queueArray))
     setFocusUnit(queueArray[step])
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [round])
 
+  const checkForWin = useCallback(
+    (checkedQueue: helpers.QueueType[]): void => {
+      let isBlueLeft: boolean = false
+      let isRightLeft: boolean = false
+      checkedQueue.forEach((unit: helpers.QueueType) => {
+        if (unit.team === 1 && unit.health > 0) {
+          isBlueLeft = true
+        } else {
+          if (unit.team === 2 && unit.health > 0) {
+            isRightLeft = true
+          }
+        }
+      })
+      console.log(isBlueLeft, isRightLeft, queue)
+      if (!isRightLeft || !isBlueLeft) {
+        if (!isRightLeft && isBlueLeft) {
+          alert('Blue team won!')
+        }
+        if (!isBlueLeft && isRightLeft) {
+          alert('Red team won!')
+        }
+        isWin.current = true
+      }
+    },
+    [queue]
+  )
+
+  useEffect(() => {
+    if (!isWin.current) {
+      checkForWin(queue)
+    }
+  }, [checkForWin, isWin, queue, step])
+
   function nextStep() {
     setQueue(helpers.getValidQueue(queue))
     resetMatrix()
     if (step + 1 >= queue.length) {
-      setRound((round) => round + 1)
+      setRound((prevRound) => prevRound + 1)
       setStep(0)
     } else {
-      setStep((step) => step + 1)
+      setStep((prevStep) => prevStep + 1)
     }
   }
 
   function resetMatrix() {
+    if (typeof queue[step] === 'undefined') {
+      return
+    }
     if (typeof queue[step].team === 'undefined') {
       return
     }
-    let unitHitMatrix;
+    let unitHitMatrix: unitTypes.unitHitMatrixType
     if (queue[step].team === 1) {
       unitHitMatrix = queue[step]!.getHitMatrix(team1.current, team2.current)
     } else {

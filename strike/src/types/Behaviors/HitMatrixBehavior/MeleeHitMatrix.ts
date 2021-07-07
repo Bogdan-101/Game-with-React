@@ -34,6 +34,16 @@ export class MeleeHitMatrix implements IHitMatrixBehavior {
       }
     }
 
+    ;[
+      { enemyCoords: 0, newEnemyCoords: 2 },
+      { enemyCoords: 2, newEnemyCoords: 0 },
+    ].forEach((elem) => {
+      if (foes[rowIndForSearch][elem.enemyCoords].health === 0 && coords[1] === elem.enemyCoords) {
+        if (foes[rowIndForSearch][elem.newEnemyCoords].health > 0)
+          result[rowInd][elem.newEnemyCoords] = true
+      }
+    })
+
     return result.reverse()
   }
 }

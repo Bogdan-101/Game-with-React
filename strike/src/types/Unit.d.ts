@@ -19,9 +19,11 @@ export type IUnit = {
   paralyze(): void
   removeParalyze(): void
   performAction(team: Unit[][], target: Unit): void
-  getHitMatrix(friends: Unit[][], foes: Unit[][]): { hitMatrix: boolean[][], isReverse: boolean }
+  getHitMatrix(friends: Unit[][], foes: Unit[][]): { hitMatrix: boolean[][]; isReverse: boolean }
   round(): void
   actionBehavior: IActionBehavior
   targetBehavior: ITargetBehavior
   hitMatrixBehavior: IHitMatrixBehavior
 }
+
+export type unitHitMatrixType = { hitMatrix: boolean[][]; isReverse: boolean }

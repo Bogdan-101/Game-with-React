@@ -6,7 +6,6 @@ export class TargetTeamFoes implements ITargetTeamBehavior {
     friends: Unit[][],
     foes: Unit[][]
   ): { friends: Unit[][]; foes: Unit[][]; isReverse: boolean } {
-    // console.log('FOES')
     return { friends, foes, isReverse: false }
   }
 }
