@@ -1,8 +1,9 @@
 .queue {
   position: absolute;
-  bottom: 15px;
+  bottom: 25px;
   left: 15px;
   width: 70%;
+  min-width: 720px;
 }
 
 .queue__wrapper {

@@ -1,7 +1,6 @@
 .field {
-  margin: 45px auto;
+  margin: 15px auto;
   width: 450px;
-  height: 400px;
   position: relative;
 }
 
@@ -9,18 +8,40 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  border: 3px solid black;
+}
+
+.field__team {
+  padding: 5px;
 }
 
 .field__teamRow {
   display: flex;
   justify-content: space-between;
+  margin-bottom: 25px;
+  align-items: center;
+}
+
+.field__team1 .field__teamRow:last-child {
+  margin-bottom: 25px;
+}
+
+.field__team1 .field__teamRow:first-child {
+  margin-bottom: 0;
+}
+
+.field__team2 .field__teamRow:last-child {
+  margin-bottom: 0;
+}
+
+.field__team2 .field__teamRow:first-child {
+  margin-bottom: 25px;
 }
 
 .field__team1 {
   display: flex;
   flex-direction: column-reverse;
 }
+
 
 .field__movingHero {
   border: 2px solid orange;

@@ -2,7 +2,7 @@ import { Unit } from "../../../types/Unit"
 
 export type hitMatrixType = {
   hitMatrix: boolean[][]
-  team: number
+  team: number | undefined
   isReverse: boolean
 }
 

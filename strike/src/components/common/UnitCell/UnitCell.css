@@ -1,10 +1,67 @@
 .cell {
-  width: 150px;
-  height: 100px;
-  padding: 10px;
   box-sizing: border-box;
+  position: relative;
+}
+
+.cell__wrapper {
+  width: 100%;
+  height: 100%;
+}
+
+.cell__image {
+  height: 124px;
+}
+
+.cell__shield {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 32px;
+  height: 32px;
+  z-index: 5;
+  filter: invert(39%) sepia(72%) saturate(1334%) hue-rotate(213deg) brightness(101%) contrast(101%);
+}
+
+.cell__info {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
 }
 
 .cell:hover {
   cursor: pointer;
+}
+
+.cell__healthBar {
+  display: inline-block;
+  height: 15px;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.8);
+  border: 1px solid white;
+  box-sizing: border-box;
+}
+
+.cell__healthRed {
+  background: red;
+  height: 13px;
+  display: inline-block;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+.cell__healthBarNumbers {
+  color: white;
+  position: relative;
+  bottom: 2px;
+  z-index: 15;
+  font-size: 13px;
+  display: flex;
+  justify-content: space-around;
 }

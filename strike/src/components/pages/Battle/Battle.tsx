@@ -106,7 +106,6 @@ export const Battle: React.FC = () => {
     setHitMatrix({
       hitMatrix: unitHitMatrix.hitMatrix,
       isReverse: unitHitMatrix.isReverse,
-      // @ts-ignore
       team: queue[step].team,
     })
   }

@@ -24,7 +24,7 @@ export const Battlefield: FC<Props> = ({
               if (hitMatrix.isReverse) {
                 isNeededTeam = !isNeededTeam
               }
-              const hitClass = hitMatrix.hitMatrix[rowInd][colInd] && isNeededTeam ? 'hit' : ''
+              const hitClass = hitMatrix.hitMatrix[rowInd][colInd] && isNeededTeam ? 'hit' : 'notHit'
               return (
                 <div
                   className={`field__hoveredDiv ${hitClass}`}
@@ -39,7 +39,7 @@ export const Battlefield: FC<Props> = ({
                   }}
                   // tslint:disable-next-line: jsx-no-lambda
                   onClick={() => {
-                    if (hitClass === '') {
+                    if (hitClass === 'notHit') {
                       return
                     }
                     let teams: {
@@ -62,7 +62,7 @@ export const Battlefield: FC<Props> = ({
                   <UnitCell
                     unit={unit}
                     isHero={hero === unit}
-                    focusedClass={focusedHero === unit ? 'hero__focused' : ''}
+                    focusedClass={focusedHero === unit ? 'hero__focused' : 'notHero'}
                   />
                 </div>
               )
