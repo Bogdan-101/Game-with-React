@@ -2,6 +2,9 @@
   margin: 15px auto;
   width: 450px;
   position: relative;
+  overflow-y: auto;
+  height: 59vh;
+  min-height: 45vh;
 }
 
 .field__hoveredDiv {

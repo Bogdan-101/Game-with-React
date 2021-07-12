@@ -11,7 +11,7 @@ export const UnitInfo: FC<Props> = ({ unit }): ReactElement => {
     <div className="info">
       <div className="info__wrapper">
         {unit && (
-          <ul>
+          <ul className="info__ul">
             <li>Name: {unit.name}</li>
             <li>Health: {unit.health}</li>
             <li>Total health: {unit.totalHealth}</li>

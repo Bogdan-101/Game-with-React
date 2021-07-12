@@ -3,9 +3,16 @@
   bottom: 0;
   right: 0;
   width: 300px;
+  max-width: 20vw;
+  max-height: 70vh;
   height: 572px;
   box-sizing: border-box;
   background: white;
   border: 1px solid black;
   padding: 25px;
+  z-index: 100;
+}
+
+.info__ul {
+  padding-inline-start: 0;
 }
