@@ -54,7 +54,7 @@ export function generateUnitsMatrix() {
   return team
 }
 
-function getHeroByIndex(ind: number): Unit {
+export function getHeroByIndex(ind: number): Unit {
   switch (ind) {
     case 1:
       return new Skeleton()
