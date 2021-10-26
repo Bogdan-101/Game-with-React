@@ -2,6 +2,16 @@ import * as helpers from '../helpers/helpers'
 import { Unit } from '../types/Unit'
 
 describe('Melee warrior hit Matrix', () => {
+  let skeleton: Unit
+  let team1: Unit[][]
+  let team2: Unit[][]
+
+  beforeEach(() => {
+    skeleton = helpers.getHeroByIndex(1)
+    team1 = helpers.generateUnitsMatrix()
+    team2 = helpers.generateUnitsMatrix()
+  })
+
   describe('melee warrior hit matrix for first enemy line', () => {
     it('should be able to attack first enemy line when positioned in the center of first line', () => {
       /*
@@ -16,9 +26,6 @@ describe('Melee warrior hit Matrix', () => {
           true | true | true
           false | false | false
       */
-      const skeleton = helpers.getHeroByIndex(1)
-      const team1 = helpers.generateUnitsMatrix()
-      const team2 = helpers.generateUnitsMatrix()
       team1[0][1] = skeleton
       const hitMatrix = skeleton.getHitMatrix(team1, team2)
       expect(hitMatrix.hitMatrix).toEqual([
@@ -39,9 +46,6 @@ describe('Melee warrior hit Matrix', () => {
           true | true | false
           false | false | false
       */
-      const skeleton = helpers.getHeroByIndex(1)
-      const team1 = helpers.generateUnitsMatrix()
-      const team2 = helpers.generateUnitsMatrix()
       team1[0][0] = skeleton
       const hitMatrix = skeleton.getHitMatrix(team1, team2)
       expect(hitMatrix.hitMatrix).toEqual([
@@ -62,9 +66,6 @@ describe('Melee warrior hit Matrix', () => {
           false | true | true
           false | false | false
       */
-      const skeleton = helpers.getHeroByIndex(1)
-      const team1 = helpers.generateUnitsMatrix()
-      const team2 = helpers.generateUnitsMatrix()
       team1[0][2] = skeleton
       const hitMatrix = skeleton.getHitMatrix(team1, team2)
       expect(hitMatrix.hitMatrix).toEqual([
@@ -85,9 +86,6 @@ describe('Melee warrior hit Matrix', () => {
           false | false | false
           false | false | false
       */
-      const skeleton = helpers.getHeroByIndex(1)
-      const team1 = helpers.generateUnitsMatrix()
-      const team2 = helpers.generateUnitsMatrix()
       team1[1][2] = skeleton
       const hitMatrix = skeleton.getHitMatrix(team1, team2)
       expect(hitMatrix.hitMatrix).toEqual([
@@ -108,9 +106,6 @@ describe('Melee warrior hit Matrix', () => {
           true | true | true
           false | false | false
       */
-      const skeleton = helpers.getHeroByIndex(1)
-      const team1 = helpers.generateUnitsMatrix()
-      const team2 = helpers.generateUnitsMatrix()
       team1[1][1] = skeleton
       team1[0].forEach((unit: Unit) => {
         unit.takeDamage(100000)
@@ -134,9 +129,6 @@ describe('Melee warrior hit Matrix', () => {
           true | true | false
           false | false | false
       */
-      const skeleton = helpers.getHeroByIndex(1)
-      const team1 = helpers.generateUnitsMatrix()
-      const team2 = helpers.generateUnitsMatrix()
       team1[1][0] = skeleton
       team1[0].forEach((unit: Unit) => {
         unit.takeDamage(100000)
@@ -160,9 +152,6 @@ describe('Melee warrior hit Matrix', () => {
           false | true | true
           false | false | false
       */
-      const skeleton = helpers.getHeroByIndex(1)
-      const team1 = helpers.generateUnitsMatrix()
-      const team2 = helpers.generateUnitsMatrix()
       team1[1][2] = skeleton
       team1[0].forEach((unit: Unit) => {
         unit.takeDamage(100000)
@@ -186,9 +175,6 @@ describe('Melee warrior hit Matrix', () => {
           false | true | true
           false | false | false
       */
-      const skeleton = helpers.getHeroByIndex(1)
-      const team1 = helpers.generateUnitsMatrix()
-      const team2 = helpers.generateUnitsMatrix()
       team1[0][0] = skeleton
       team2[0][0].takeDamage(10000)
       const hitMatrix = skeleton.getHitMatrix(team1, team2)
@@ -210,9 +196,6 @@ describe('Melee warrior hit Matrix', () => {
           false | false | true
           false | false | false
       */
-      const skeleton = helpers.getHeroByIndex(1)
-      const team1 = helpers.generateUnitsMatrix()
-      const team2 = helpers.generateUnitsMatrix()
       team1[0][0] = skeleton
       team2[0][0].takeDamage(10000)
       team2[0][1].takeDamage(10000)
@@ -235,9 +218,6 @@ describe('Melee warrior hit Matrix', () => {
           true | true | false
           false | false | false
       */
-      const skeleton = helpers.getHeroByIndex(1)
-      const team1 = helpers.generateUnitsMatrix()
-      const team2 = helpers.generateUnitsMatrix()
       team1[0][2] = skeleton
       team2[0][2].takeDamage(10000)
       const hitMatrix = skeleton.getHitMatrix(team1, team2)
@@ -259,9 +239,6 @@ describe('Melee warrior hit Matrix', () => {
           true | false | false
           false | false | false
       */
-      const skeleton = helpers.getHeroByIndex(1)
-      const team1 = helpers.generateUnitsMatrix()
-      const team2 = helpers.generateUnitsMatrix()
       team1[0][2] = skeleton
       team2[0][2].takeDamage(10000)
       team2[0][1].takeDamage(10000)
@@ -286,9 +263,6 @@ describe('Melee warrior hit Matrix', () => {
           false | false | false
           true | true | true
       */
-      const skeleton = helpers.getHeroByIndex(1)
-      const team1 = helpers.generateUnitsMatrix()
-      const team2 = helpers.generateUnitsMatrix()
       team1[0][1] = skeleton
       team2[0].forEach((unit: Unit) => {
         unit.takeDamage(9000)
@@ -312,9 +286,6 @@ describe('Melee warrior hit Matrix', () => {
           false | false | false
           true | true | false
       */
-      const skeleton = helpers.getHeroByIndex(1)
-      const team1 = helpers.generateUnitsMatrix()
-      const team2 = helpers.generateUnitsMatrix()
       team1[0][0] = skeleton
       team2[0].forEach((unit: Unit) => {
         unit.takeDamage(9000)
@@ -338,9 +309,6 @@ describe('Melee warrior hit Matrix', () => {
           false | false | false
           false | true | true
       */
-      const skeleton = helpers.getHeroByIndex(1)
-      const team1 = helpers.generateUnitsMatrix()
-      const team2 = helpers.generateUnitsMatrix()
       team1[0][0] = skeleton
       team2[0].forEach((unit: Unit) => {
         unit.takeDamage(9000)
@@ -365,9 +333,6 @@ describe('Melee warrior hit Matrix', () => {
           false | false | false
           false | true | true
       */
-      const skeleton = helpers.getHeroByIndex(1)
-      const team1 = helpers.generateUnitsMatrix()
-      const team2 = helpers.generateUnitsMatrix()
       team1[0][2] = skeleton
       team2[0].forEach((unit: Unit) => {
         unit.takeDamage(9000)
@@ -391,9 +356,6 @@ describe('Melee warrior hit Matrix', () => {
           false | false | false
           true | true | false
       */
-      const skeleton = helpers.getHeroByIndex(1)
-      const team1 = helpers.generateUnitsMatrix()
-      const team2 = helpers.generateUnitsMatrix()
       team1[0][2] = skeleton
       team2[0].forEach((unit: Unit) => {
         unit.takeDamage(9000)
@@ -418,9 +380,6 @@ describe('Melee warrior hit Matrix', () => {
           false | false | false
           true | true | true
       */
-      const skeleton = helpers.getHeroByIndex(1)
-      const team1 = helpers.generateUnitsMatrix()
-      const team2 = helpers.generateUnitsMatrix()
       team1[1][1] = skeleton
       team2[0].forEach((unit: Unit) => {
         unit.takeDamage(9000)
@@ -447,9 +406,6 @@ describe('Melee warrior hit Matrix', () => {
           false | false | false
           true | true | false
       */
-      const skeleton = helpers.getHeroByIndex(1)
-      const team1 = helpers.generateUnitsMatrix()
-      const team2 = helpers.generateUnitsMatrix()
       team1[1][0] = skeleton
       team2[0].forEach((unit: Unit) => {
         unit.takeDamage(9000)
@@ -476,9 +432,6 @@ describe('Melee warrior hit Matrix', () => {
           false | false | false
           false | true | true
       */
-      const skeleton = helpers.getHeroByIndex(1)
-      const team1 = helpers.generateUnitsMatrix()
-      const team2 = helpers.generateUnitsMatrix()
       team1[1][0] = skeleton
       team2[0].forEach((unit: Unit) => {
         unit.takeDamage(9000)
@@ -506,9 +459,6 @@ describe('Melee warrior hit Matrix', () => {
           false | false | false
           false | true | true
       */
-      const skeleton = helpers.getHeroByIndex(1)
-      const team1 = helpers.generateUnitsMatrix()
-      const team2 = helpers.generateUnitsMatrix()
       team1[1][2] = skeleton
       team2[0].forEach((unit: Unit) => {
         unit.takeDamage(9000)
@@ -535,9 +485,6 @@ describe('Melee warrior hit Matrix', () => {
           false | false | false
           true | true | false
       */
-      const skeleton = helpers.getHeroByIndex(1)
-      const team1 = helpers.generateUnitsMatrix()
-      const team2 = helpers.generateUnitsMatrix()
       team1[1][2] = skeleton
       team2[0].forEach((unit: Unit) => {
         unit.takeDamage(9000)
